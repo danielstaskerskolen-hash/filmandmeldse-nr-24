@@ -1,0 +1,197 @@
+import{_ as h}from"./preload-helper.Ct5FWWRu.js";var c=()=>new Promise(t=>requestAnimationFrame(()=>requestAnimationFrame(t))),l=t=>{const i=new Date().getTime()-new Date(t).getTime(),s=Math.floor(i/6e4),n=Math.floor(s/60);return s<1?"NÅ":s<60?`${s} min. siden`:`${n} t. siden`},r=()=>new Promise(t=>{document.visibilityState==="visible"?t(!0):document.addEventListener("visibilitychange",()=>{document.visibilityState==="visible"&&t(!0)})}),d=t=>{const e=new BroadcastChannel(t);return{close:()=>e.close(),onmessage:i=>e.addEventListener("message",s=>i(s.data)),postMessage:i=>e.postMessage(i)}},u=({description:t,sentTime:e,url:i,title:s="Nyhetsvarsel"})=>{const n=document.createElement("template"),a=l(e);return n.innerHTML=`
+  <style>
+    @keyframes scale {
+      from {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.9);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      from {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      75% {
+        transform: scale(1.75);
+        opacity: 0;
+      }
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+    :host {
+      display: block;
+    }
+    :host .push-banner-wrapper {
+      --background-color: 64, 0, 0;
+
+      display: flex;
+      height: 56px;
+      color: var(--color-white);
+      font-size: 16px;
+      position: fixed;
+      z-index: var(--push-banner-elevation, 2000);
+      top: calc(var(--header-offset-top) + var(--header-height));
+      left: 0;
+      right: 0;
+      transform: translateY(-100%);
+      background-color: rgb(var(--background-color));
+      transition: 
+          transform 0.3s cubic-bezier(0.45, 1.45, 0.8, 1), 
+          background-color 0.5s ease-out 1s;
+      padding: var(--space-xxs) 0;
+    }
+    :host .push-banner-wrapper.show {
+      transform: translateY(0);
+    }
+    :host .push-banner-inner {
+      position: relative;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1010px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    :host a {
+      color: currentColor;
+      align-items: center;
+      display: flex;
+      text-decoration: none;
+      flex-wrap: nowrap;
+      gap: var(--space-xs);
+      padding: var(--space-m);
+      height: 30px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-grow: 1;
+    }
+    @media (hover: hover) {
+      :host a:hover .description {
+        text-decoration: underline; 
+      }
+    }
+    @media (max-width: 768px) {
+      :host a::after {
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        content: "";
+        width: 200px;
+        height: 100%;
+        background: linear-gradient(
+          90deg, rgba(var(--background-color), 0) 0%, 
+          rgba(var(--background-color), 1) 100%
+        );
+      }
+    }
+    :host h2 {
+      font-size: 1em;
+      font-family: var(--font-inter);
+      font-weight: 500;
+      color: inherit;
+      margin: 0;
+      padding-right: var(--space-s);
+      display: flex;
+      flex-direction: column;
+    }
+    :host h2 .description {
+      white-space: nowrap;
+      position: relative;
+      font-weight: 400;
+    }
+    :host h2 strong {
+      font-size: 0.8em;
+    }
+    :host .sent-time {
+      z-index: 1;
+
+      pointer-events: none;
+      font-weight: 400;
+      font-variant-numeric: tabular-nums;
+      margin-left: var(--space-xxs);
+      color: var(--label-secondary);
+    }
+    :host .sent-time::before {
+      content: "|";
+      padding-right: var(--space-xxs);
+    }
+
+    .indicator {
+      align-items: center;
+      display: inline-flex;
+      height: clamp(38px, calc((36 / 580) * 100vw), 66px);
+      position: relative;
+      vertical-align: bottom;
+    }
+
+    .circle,
+    .pulse {
+      aspect-ratio: 1;
+      background-color: hsl(0, 100%, 43%);
+      border-radius: 50%;
+      width: clamp(16px, calc((20 / 580) * 100vw), 26px);
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+      position: absolute;
+    }
+
+    .circle {
+      animation: scale 2s infinite;
+      margin-right: var(--space-xxs);
+    }
+    .close-button {
+      z-index: 1;
+      appearance: none;
+      background: transparent;
+      border: none;
+      color: var(--color-white);
+      cursor: pointer;
+      height: 100%;
+      padding: 0 var(--space-s);
+    }
+  </style>
+  <div class="push-banner-wrapper">
+    <div class="push-banner-inner">
+      <a href="${i}">
+        <div class="indicator">
+          <span class="pulse"></span>
+          <span class="circle"></span>
+        </div>
+        <h2>
+          <strong>${s} <time datetime="${e}" class="sent-time">${a}</time></strong>
+          <span class="description">${t}</span>
+        </h2>
+      </a>
+      <button aria-label="Lukk" class="close-button">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-x"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+`,n},o={production:"production",staging:"staging"},p={11:"Nyhetsvarsel",22:"Sport",21:"Nyheter",23:"Rampelys"},m=class extends HTMLElement{connection=null;documentTitle=document.title;environment="production";hideAfter;hideTimeout=null;sentTimeInterval=null;showSimpleTitleTimeout=null;titleUpdateInterval=null;topic="";allowedSubscriptions=["11"];constructor(){super(),this.environment=o[this.dataset.environment||"production"]??o.production,this.attachShadow({mode:"open"}),this.topic=`vg/web-push/${this.environment}`,this.allowedSubscriptions=this.dataset.allowedSubscriptions?.split(",")??["11"],this.initializeEventhub(),this.hideAfter=this.dataset.hideAfter?parseInt(this.dataset.hideAfter,10):null}isOld(t,e=60){const i=new Date(t*1e3),s=new Date,n=new Date(s.getTime()-e*6e4);return i<n}attachClickTracking(){this.dataset.trackClick="true",this.dataset.trackName=this.data.description,this.dataset.trackId="web-push",this.dataset.trackElementType="Push banner"}attributeChangedCallback(t,e,i){if(JSON.parse(e)?.id===JSON.parse(i)?.id)return;this.updateTitle();const s=this.getWrapper();if(!s)return this.render();s.classList.contains("show")?(this.hide(),s?.addEventListener("transitionend",()=>{this.render()})):this.render()}connectedCallback(){this.addEventListener("auxclick",t=>{t.button===1&&this.storeClick()}),this.addEventListener("click",()=>{this.storeClick()}),this.addEventListener("touchstart",()=>{this.hideTimeout&&(clearTimeout(this.hideTimeout),this.hideTimeout=null)},{once:!0,passive:!0}),this.addEventListener("mouseenter",()=>{this.hideTimeout&&(clearTimeout(this.hideTimeout),this.hideTimeout=null)}),this.addEventListener("mouseleave",()=>{this.hideTimeout||this.startHideAfter()})}async connectEventhub(){if(this.connection)return;const{default:t}=await h(async()=>{const{default:i}=await import("https://esm.vg.no/eventhub-jsclient@2.4.0?bundle");return{default:i}},[],import.meta.url),e=new t("wss://direktehub.vg.no",this.dataset.eventhubToken);this.connection=e,await this.connection?.connect(),this.connection?.subscribe(this.topic,i=>{this.data=this.parseData(JSON.parse(i.message))||""})}disconnectedCallback(){this.data="",this.shadowRoot.innerHTML="",this.disconnectEventhub(),this.titleUpdateInterval&&(clearInterval(this.titleUpdateInterval),this.titleUpdateInterval=null),this.showSimpleTitleTimeout&&(clearTimeout(this.showSimpleTitleTimeout),this.showSimpleTitleTimeout=null),this.sentTimeInterval&&(clearInterval(this.sentTimeInterval),this.sentTimeInterval=null)}async disconnectEventhub(){this.connection?.unsubscribeAll(),this.connection?._socket?.close(),this.connection?.disconnect(),this.connection=null}async fetchPushData(){try{const t=parseFloat(this.dataset.maxAgeMinutes??"10"),e=t*6e4,i=await this.connection?.getEventlog(this.topic,{since:-e});if(!i?.items)return;const s=i.items.at(-1);if(!s?.message)return;const n=JSON.parse(s.message);if(this.isOld(n.sentTime,t))return;const a=this.parseData(n)||"";this.data=a}catch(t){console.error("Failed to fetch push data",t)}}getWrapper(){return this.shadowRoot?.querySelector(".push-banner-wrapper")}hasClicked(){return localStorage.getItem("__vg_push_banner_clicked")===this.data.url}hide(){this.getWrapper()?.classList.remove("show")}async initializeEventhub(){await this.connectEventhub(),this.dataset.enableFetch==="true"&&this.fetchPushData(),window.addEventListener("beforeunload",async()=>{await this.disconnectEventhub()}),window.addEventListener("pagehide",async()=>{await this.disconnectEventhub()}),document.addEventListener("freeze",async()=>{await this.disconnectEventhub()}),window.addEventListener("pageshow",()=>{this.connectEventhub()})}isSubscribed(t=this.data){return this.allowedSubscriptions.some(e=>t.subscriptions.includes(e))}parseData({description:t,id:e,payload:i="{}",sentTime:s,subscriptions:n}){const a=JSON.parse(i)?.src;if(e&&t&&s&&n&&a)return{description:t,id:e,sentTime:new Date(s*1e3),subscriptions:n,url:a}}async render(){if(this.data===null||this.hasClicked())return;await r(),this.sentTimeInterval&&(clearInterval(this.sentTimeInterval),this.sentTimeInterval=null),this.hideTimeout&&(clearTimeout(this.hideTimeout),this.hideTimeout=null);const t=p[this.data.subscriptions[0]]||"Nyhetsvarsel",e=u({...this.data,title:t});this.shadowRoot&&(this.shadowRoot.innerHTML=""),this.shadowRoot?.appendChild(e.content.cloneNode(!0)),this.reveal(),this.getWrapper()?.querySelector(".close-button")?.addEventListener("click",()=>{this.hide()}),this.sentTimeInterval=setInterval(()=>{this.updateSentTime()},1e3),this.attachClickTracking(),this.startHideAfter()}async reveal(){await c(),this.getWrapper()?.classList.add("show")}async startHideAfter(){this.hideAfter&&(await r(),this.hideTimeout=setTimeout(()=>{this.hide()},this.hideAfter*1e3))}storeClick(){localStorage.setItem("__vg_push_banner_clicked",this.data.url)}updateSentTime(){const t=this.shadowRoot?.querySelector(".sent-time");t&&(t.textContent=l(this.data.sentTime))}async updateTitle(){if(document.visibilityState==="visible")return;this.showSimpleTitleTimeout=setTimeout(()=>{this.titleUpdateInterval&&(clearInterval(this.titleUpdateInterval),this.titleUpdateInterval=null),document.title="(1) Nyhetsvarsel"},10*1e3);const t=d("web-push-banner");t.onmessage(i=>{i==="viewed"&&(this.titleUpdateInterval&&(clearInterval(this.titleUpdateInterval),this.titleUpdateInterval=null),this.showSimpleTitleTimeout&&(clearTimeout(this.showSimpleTitleTimeout),this.showSimpleTitleTimeout=null),document.title=this.documentTitle)});const e=`(1) ${this.data.description.trim()}`;document.title=e,this.titleUpdateInterval&&(clearInterval(this.titleUpdateInterval),this.titleUpdateInterval=null),this.showSimpleTitleTimeout&&(clearTimeout(this.showSimpleTitleTimeout),this.showSimpleTitleTimeout=null),this.titleUpdateInterval=setInterval(()=>{document.title=document.title===e?"(1) Nyhetsvarsel":e},2e3),await r()&&(t.postMessage("viewed"),t.close(),this.titleUpdateInterval&&(clearInterval(this.titleUpdateInterval),this.titleUpdateInterval=null),this.showSimpleTitleTimeout&&(clearTimeout(this.showSimpleTitleTimeout),this.showSimpleTitleTimeout=null),document.title=this.documentTitle)}get data(){return JSON.parse(this.getAttribute("data"))}set data(t){this.isSubscribed(t)&&this.setAttribute("data",JSON.stringify(t))}static get observedAttributes(){return["data"]}};customElements.define("push-banner",m);
+//# sourceMappingURL=PushBanner.astro_astro_type_script_index_0_lang.DvbXp_FZ.js.map
