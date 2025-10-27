@@ -1,0 +1,2 @@
+import{A as o}from"./AccountStore.CmOUMuI4.js";import"./index.BTyekFtn.js";import"https://esm.vg.no/react@19.1.1/es2020/react.mjs";import"https://esm.vg.no/@schibsted/account-sdk-browser@5.2.3/es2020/account-sdk-browser.mjs";import"./chunk-PXWMJYNN.WLwigf80.js";import"./chunk-UINSU34X.CLKLpshZ.js";const t=document.getElementById("account-config");if(!t?.textContent)throw new Error("Missing account config");const n=JSON.parse(t.textContent);o({config:n});
+//# sourceMappingURL=AccountStore.astro_astro_type_script_index_0_lang.CxLdLY4R.js.map

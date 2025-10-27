@@ -1,0 +1,2 @@
+import{init as t}from"https://esm.vg.no/@schibsted/data-controller@6.0.0/es2020/data-controller.mjs";const e={brandName:"VG",language:"no",layout:"subheader",minimizeText:!0,selector:".schibsted-data-controller"},n=t(e);n.render(document.querySelector(e.selector));
+//# sourceMappingURL=SchibstedDataController.astro_astro_type_script_index_0_lang.DlncVlbA.js.map

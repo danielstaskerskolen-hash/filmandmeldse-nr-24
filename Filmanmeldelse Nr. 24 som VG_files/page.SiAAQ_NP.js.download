@@ -1,0 +1,2 @@
+import*as e from"https://esm.vg.no/@sentry/astro@9.17.0";e.init({dsn:"https://2d8dce823c094e8b9733997b0bdf3f86@sentry.vgnett.no/108",debug:!1,environment:"production",release:void 0,tracesSampleRate:0,sampleRate:1,integrations:[e.browserTracingIntegration()],replaysSessionSampleRate:0,replaysOnErrorSampleRate:0});
+//# sourceMappingURL=page.SiAAQ_NP.js.map
